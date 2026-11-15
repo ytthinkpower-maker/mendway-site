@@ -1,0 +1,138 @@
+/*
+ * mendwayapp.com — loaded by every page.
+ *
+ * No scripts, no analytics, nothing from another host: the privacy policy says
+ * this site sets no cookies and loads nothing from anyone else, so the page
+ * itself must keep that promise. The policy pages use system fonts and the
+ * Ember Pine colors only.
+ *
+ * The document rules below are for the policy pages. Each is scoped with
+ * :where(html:not(.home)), which adds no specificity, so the policy pages
+ * render exactly as before, while the homepage (<html class="home">) opts out
+ * and takes its layout from /home.css instead.
+ */
+
+:root {
+  color-scheme: light dark;
+  --canvas: #FAF6EF;
+  --ink: #22302A;
+  --muted: #5E5850;
+  --rule: rgba(34, 48, 42, 0.12);
+  /* The app's `action.text` in Ember Daylight: terracotta dark enough to be ink. */
+  --link: #A1481F;
+  --mark: #F6E2B8;
+}
+
+/* Screen only: a policy page printed from a dark-mode device stays dark on
+   light, since printers drop backgrounds by default and would leave cream
+   text on white. */
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #150F1C;
+    --ink: #F3ECE2;
+    --muted: #C9BFB3;
+    --rule: rgba(243, 236, 226, 0.14);
+    --link: #E2914F;
+    --mark: #5A3B1C;
+  }
+}
+
+html:where(:not(.home)) {
+  background: var(--canvas);
+  color: var(--ink);
+  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+:where(html:not(.home)) body {
+  margin: 0 auto;
+  max-width: 42rem;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+:where(html:not(.home)) h1 {
+  font-size: 1.9rem;
+  line-height: 1.2;
+  margin: 0 0 0.4rem;
+}
+
+:where(html:not(.home)) h2 {
+  font-size: 1.2rem;
+  margin: 2.4rem 0 0.6rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+}
+
+:where(html:not(.home)) h3 {
+  font-size: 1rem;
+  margin: 1.6rem 0 0.4rem;
+}
+
+:where(html:not(.home)) p, :where(html:not(.home)) li {
+  margin: 0 0 0.8rem;
+}
+
+:where(html:not(.home)) ul {
+  padding-left: 1.25rem;
+}
+
+:where(html:not(.home)) a {
+  color: var(--link);
+}
+
+.updated, .small {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.lede {
+  font-size: 1.15rem;
+}
+
+.short {
+  border-left: 3px solid var(--link);
+  padding: 0.2rem 0 0.2rem 1rem;
+  margin: 1.6rem 0;
+}
+
+/* The site-wide footer. Scoped to the footer: the FAQ's "Topics" list is a
+   nav too, and is a table of contents at the top, not a rule-topped row.
+   The homepage lays out its own footer row (home.css). */
+:where(html:not(.home)) footer nav {
+  margin-top: 3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.95rem;
+}
+
+/* Thumb-sized targets: about 44px tall with the line height, where bare
+   inline links were only as tall as their text. */
+footer nav a {
+  display: inline-block;
+  padding: 0.55rem 0;
+  margin-right: 1.2rem;
+}
+
+/* Unfinished facts. None may remain when the page is published. */
+mark.todo {
+  background: var(--mark);
+  color: inherit;
+  padding: 0 0.2em;
+  font-weight: 600;
+}
+
+/* A visible ring for anyone moving through the page with a keyboard. */
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+/* For anyone who has asked their system for less motion: nothing moves. */
+@media (prefers-reduced-motion: reduce) {
+  *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

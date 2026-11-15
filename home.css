@@ -1,0 +1,552 @@
+/* Mendway home page. One stylesheet, no inline styles, no scripts (site/README.md: CSP style-src 'self', no scripts).
+   Concept: one continuous sky, dusk at the top to daylight at the bottom. Sections never set a background of their own
+   except as a segment of that sky; each segment starts on the color the previous one ended on. */
+
+@font-face{font-family:"Jakarta";src:url(fonts/plus-jakarta-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Jakarta";src:url(fonts/plus-jakarta-sans-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Jakarta";src:url(fonts/plus-jakarta-sans-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+
+:root{
+  /* Ember Pine: night */
+  --sky-0:#1B1030; --sky-1:#24143A; --sky-2:#2E1640;
+  --cream:#FFEED6; --cream-2:rgba(255,238,214,.72); --glass:rgba(255,238,214,.07); --glass-line:rgba(255,238,214,.15);
+  --ember:#F6A55F; --ember-2:#E8734F; --on-ember:#2A1006;
+  /* dusk to day: the app's two skies joined */
+  --dusk-a:#6B2450; --dusk-b:#B8455A; --dawn-a:#E8734F; --dawn-b:#FF9257; --dawn-c:#FFB877; --dawn-d:#FFE2A8;
+  /* Ember Daylight */
+  --linen:#FAF6EF; --ink:#22302A; --body:#4F4A44; --muted:#6E655D;
+  --terra:#B8552E; --terra-press:#A1481F; --sage:#3F6B4C; --line:rgba(34,48,42,.12);
+  --tree-far:#8FD9A8; --tree-mid:#3FAE74; --tree-near:#16764F;
+  --night-far:#5C4A6B; --night-mid:#2E4038; --night-near:#14241F;
+
+  --h2:clamp(2rem,4.2vw,3.25rem);
+  --lede:clamp(1.125rem,1.6vw,1.3125rem);
+  --wrap:1200px; --gut:clamp(20px,4vw,48px); --sec:clamp(88px,11vw,144px);
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --radius-shot:28px; --shadow-night:0 30px 70px rgba(10,4,16,.55); --shadow-day:0 30px 60px rgba(34,48,42,.18);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--sky-0)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;font-family:"Jakarta",-apple-system,system-ui,sans-serif;font-weight:500;font-size:1.0625rem;line-height:1.6;color:var(--cream);-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+h1,h2,h3,p,ul,figure{margin:0}
+ul{padding:0;list-style:none}
+h2{font-size:var(--h2);font-weight:800;letter-spacing:-.03em;line-height:1.06;text-wrap:balance;max-width:13em}
+.lede{margin-top:20px;font-size:var(--lede);line-height:1.55;max-width:30em}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+.split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(40px,7vw,104px);align-items:center}
+@media (max-width:880px){.split{grid-template-columns:1fr}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--ember);outline-offset:3px;border-radius:8px}
+.day :focus-visible{outline-color:var(--terra)}
+
+/* screenshots: one treatment everywhere */
+.shot{border-radius:var(--radius-shot);overflow:hidden;box-shadow:var(--shadow-night)}
+.day .shot{box-shadow:var(--shadow-day)}
+.shot-cap{margin-top:14px;font-size:.875rem;color:var(--cream-2)}
+.day .shot-cap{color:var(--muted)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:52px;padding:0 1.5em;border-radius:20px;border:0;font:inherit;font-weight:800;font-size:1rem;letter-spacing:-.01em;text-decoration:none;cursor:pointer;transition:transform .18s var(--ease),box-shadow .25s var(--ease),background-position .6s var(--ease),background-color .2s}
+.btn:active{transform:scale(.97)}
+.btn-ember{background:linear-gradient(110deg,var(--ember),var(--ember-2) 55%,var(--ember));background-size:200% 100%;color:var(--on-ember);box-shadow:0 10px 26px rgba(232,115,79,.3)}
+.btn-ember:hover{background-position:100% 0;box-shadow:0 14px 34px rgba(232,115,79,.45)}
+.btn-quiet{background:none;color:inherit;box-shadow:inset 0 0 0 1.5px var(--glass-line)}
+.btn-quiet:hover{box-shadow:inset 0 0 0 1.5px rgba(255,238,214,.45)}
+.soon{display:inline-flex;align-items:center;gap:.55em;min-height:52px;padding:.7em 1.35em;border-radius:20px;background:rgba(255,238,214,.1);box-shadow:inset 0 0 0 1px var(--glass-line);font-weight:700;font-size:.9375rem;line-height:1.3;text-decoration:none;transition:background-color .2s,box-shadow .2s}
+.soon:hover{background:rgba(255,238,214,.17);box-shadow:inset 0 0 0 1px rgba(255,238,214,.45)}
+.soon svg{flex:none;width:18px;height:18px;fill:currentColor}
+.day .soon{background:#fff;box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.day .soon:hover{box-shadow:inset 0 0 0 1.5px var(--terra)}
+.get{display:inline-flex;align-items:center;gap:12px}
+.app-icon{flex:none;width:52px;height:52px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--glass-line)}
+.app-icon-s{width:36px;height:36px;border-radius:9px}
+.nav-get-wrap{gap:10px}
+/* the narrowest phones: the nav keeps two rows by dropping its icon; the pills keep theirs */
+@media (max-width:420px){.app-icon-s{display:none}}
+
+/* nav */
+.nav{position:absolute;inset:0 0 auto;z-index:5}
+.nav .wrap{display:flex;align-items:center;gap:12px 28px;min-height:76px}
+/* the lockup: the pines stand on the wordmark's baseline and rise just above its capitals */
+.brand{display:inline-block;padding:8px 0;font-weight:800;font-size:1.5rem;line-height:28px;letter-spacing:-.035em;text-decoration:none;white-space:nowrap}
+.brand svg{display:inline-block;vertical-align:baseline;width:26.4px;height:25px;margin-right:9px}
+@media (max-width:700px){.brand{font-size:1.375rem}.brand svg{width:24.3px;height:23px;margin-right:8px}}
+.nav-links{display:flex;gap:28px;align-items:center;margin-left:auto;font-size:1rem;font-weight:700;color:var(--cream-2)}
+.nav-links a{text-decoration:none;padding:12px 6px;margin:0 -6px;transition:color .2s}
+.nav-links a:hover{color:var(--cream)}
+/* the compact download link: the ember button, smaller */
+.nav-get{min-height:44px;padding:0 1.1em;border-radius:14px;font-size:.9375rem;box-shadow:0 6px 18px rgba(232,115,79,.28)}
+@media (max-width:880px){.nav .wrap{column-gap:20px}.nav-links{gap:20px}}
+/* narrow: brand and the download link on the first row, all three links on the second */
+@media (max-width:700px){
+  .nav .wrap{flex-wrap:wrap;padding-top:10px;row-gap:0}
+  .nav-get-wrap{order:2;margin-left:auto}
+  .nav-links{order:3;width:100%;margin-left:0;justify-content:flex-start;gap:22px}
+}
+@media (max-width:620px){.tile small{font-size:.75rem}.tile{padding:12px 10px 10px}}
+
+/* =========================================================
+   SKY SEGMENTS: each starts where the last one ended
+   ========================================================= */
+.hero{background:linear-gradient(180deg,var(--sky-0),var(--sky-1))}
+.reset{background:linear-gradient(180deg,var(--sky-1),var(--sky-2))}
+.sunrise{background:linear-gradient(180deg,var(--sky-2) 0%,#4A1B48 16%,var(--dusk-a) 32%,var(--dusk-b) 48%,var(--dawn-a) 60%,var(--dawn-b) 72%,var(--dawn-c) 86%,var(--dawn-d) 100%)}
+.day{--sec:clamp(64px,7.5vw,100px);color:var(--ink);background:linear-gradient(180deg,#E4F0E5 0%,#F1F3E9 9%,#F8F5EC 22%,var(--linen) 40%,#F7F1E4 100%)}
+
+/* =========================================================
+   HERO: headline from the first frame, the rescue plays under it
+   ========================================================= */
+.hero{position:relative;overflow:hidden;padding:clamp(108px,13vh,140px) 0 0}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);grid-template-areas:"h demo" "intro demo" "rest demo";grid-template-rows:auto auto 1fr;column-gap:clamp(40px,6vw,96px);align-items:start}
+.hero h1{grid-area:h;margin-top:clamp(0px,3vw,40px)}
+.hero-demo{grid-area:demo}
+.hero-intro{grid-area:intro}
+.hero-rest{grid-area:rest}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr;grid-template-rows:none;grid-template-areas:"h" "intro" "rest" "demo"}.hero-demo{margin-top:40px}.hero-rest{margin-top:4px}}
+@media (max-width:700px){.hero{padding-top:148px}}
+.hero h1{font-size:clamp(2.375rem,4.6vw,4rem);font-weight:800;letter-spacing:-.04em;line-height:.98}
+.hero h1 > span{display:block}
+.dot{margin-left:-.07em}
+.hero .intro{max-width:32em;margin-top:24px;font-size:var(--lede);color:var(--cream-2)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.close .ctas{justify-content:center}
+.avail{margin-top:14px;font-size:.875rem;color:var(--cream-2)}
+
+.stage{position:relative;width:100%;max-width:520px;padding:30px 24px 34px;border-radius:32px;background:linear-gradient(180deg,rgba(59,24,64,.55),rgba(107,36,80,.45));box-shadow:inset 0 0 0 1px var(--glass-line),0 40px 90px rgba(10,4,16,.5)}
+.stage-cap{margin-top:14px;font-size:.875rem;color:var(--cream-2);max-width:520px}
+.stage-b{display:none}
+#replay:checked ~ .stage-a{display:none}
+#replay:checked ~ .stage-b{display:block}
+.replay{display:block;width:max-content;padding:11px 0;margin:-3px 0;color:var(--ember);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+#replay:focus-visible ~ .stage-cap .replay{outline:3px solid var(--ember);outline-offset:2px;border-radius:6px}
+.seq{display:grid}
+.seq > .s{grid-area:1/1;display:flex;flex-direction:column;align-items:center;text-align:center}
+.step{font-size:.875rem;font-weight:700;color:var(--cream-2);margin-bottom:10px}
+.s-title{font-size:clamp(1.5rem,3vw,1.875rem);font-weight:800;letter-spacing:-.025em;line-height:1.15}
+.s-sub{margin-top:8px;color:var(--cream-2);font-size:1rem}
+.ring{position:relative;width:min(56vw,220px);aspect-ratio:1;margin-top:30px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,rgba(232,115,79,.45),rgba(168,64,90,.34) 62%,rgba(141,47,76,.24));box-shadow:inset 0 0 0 1.5px rgba(255,238,214,.18),0 0 70px rgba(232,115,79,.25)}
+.ring-label{font-weight:800;font-size:1.5rem;letter-spacing:-.02em;line-height:1.1}
+.count{position:relative;height:2.2rem;margin-top:4px;font-size:2rem;font-weight:800;color:rgba(255,238,214,.88)}
+.count span{position:absolute;left:50%;transform:translateX(-50%);opacity:0}
+.chipsets{display:grid;width:100%;margin-top:24px}
+.chipsets > .chips{grid-area:1/1;align-content:start}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+/* step 3's eyebrow is the chip that was tapped, as in the app's stake step */
+.eyebrow{display:grid;margin-bottom:6px;font-weight:700;font-size:.9375rem;color:var(--ember)}
+.eyebrow > span{grid-area:1/1}
+/* one set per habit, stacked in the same cell, so switching never moves anything. Visibility, not display:
+   a set that went from display:none to shown would start its chip animations again, mid-sequence. */
+.v{visibility:hidden}
+.v-alcohol{visibility:inherit}
+.habit-tabs{display:none}
+@supports selector(:has(*)){
+  .habit-tabs{display:flex}
+  .hero-demo:has(.habit-tabs :checked) .v{visibility:hidden}
+  .hero-demo:has(#h-alcohol:checked) .v-alcohol,.hero-demo:has(#h-smoking:checked) .v-smoking,
+  .hero-demo:has(#h-vaping:checked) .v-vaping,.hero-demo:has(#h-porn:checked) .v-porn,
+  .hero-demo:has(#h-food:checked) .v-food,.hero-demo:has(#h-gaming:checked) .v-gaming{visibility:inherit}
+}
+/* the habit choices: real radio buttons, drawn as their labels */
+.habit-tabs{flex-wrap:wrap;gap:6px;max-width:520px;min-width:0;margin:0 0 14px;padding:0;border:0}
+.habit-tabs input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.habit-tabs label{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:99px;background:var(--glass);box-shadow:inset 0 0 0 1px var(--glass-line);font-weight:700;font-size:.9375rem;color:var(--cream-2);cursor:pointer;transition:background-color .2s,color .2s}
+.habit-tabs label:hover{color:var(--cream);box-shadow:inset 0 0 0 1px rgba(255,238,214,.4)}
+.habit-tabs input:checked + label{background:#FFF5E6;color:var(--on-ember);box-shadow:none}
+.habit-tabs input:focus-visible + label{outline:3px solid var(--ember);outline-offset:2px}
+.chip{padding:10px 18px;border-radius:99px;background:var(--glass);box-shadow:inset 0 0 0 1px var(--glass-line);font-weight:700;font-size:.9375rem}
+.pill{margin-top:28px;min-width:min(100%,300px);background:#FFF5E6;color:var(--on-ember);box-shadow:none}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;margin-top:22px;text-align:left}
+.tile{padding:14px 14px 12px;border-radius:18px;background:var(--glass);box-shadow:inset 0 0 0 1px var(--glass-line)}
+.tile b{display:block;font-size:clamp(1.25rem,2.6vw,1.625rem);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.tile small{display:block;margin-top:4px;font-size:.8125rem;font-weight:500;color:var(--cream-2);line-height:1.3}
+.n{position:relative;display:block;height:1.1em}
+.n i{position:absolute;left:0;top:0;font-style:normal}
+.n .from{opacity:0}
+.why{margin-top:18px;color:var(--cream-2)}
+.why q{display:block;color:var(--cream);font-weight:700;margin-top:4px}
+.rode{margin-top:22px;min-width:min(100%,300px)}
+.beat{margin-top:12px;font-weight:700;color:var(--ember)}
+/* default (print, reduced motion, no animation support): the last step, finished */
+.s1,.s2{visibility:hidden}
+
+.stars{position:absolute;inset:0;z-index:0;pointer-events:none}
+/* the moon rises over the hero's pines: a warm crescent with earthshine, behind the trees and the content */
+.moon{--m:clamp(96px,9.4vw,144px);position:absolute;z-index:0;left:39%;bottom:calc(max(clamp(120px,18vw,220px),18vw) * .88);width:var(--m);aspect-ratio:1;border-radius:50%;pointer-events:none;background:radial-gradient(circle at 38% 42%,rgba(255,238,214,.13),rgba(255,238,214,.05) 70%);box-shadow:inset calc(var(--m) * -.24) calc(var(--m) * -.05) 0 0 #FFEBCB,0 0 28px 2px rgba(255,214,160,.28)}
+.moon::after{content:"";position:absolute;inset:-85%;border-radius:50%;background:radial-gradient(circle,rgba(255,196,140,.26),rgba(246,165,95,.1) 38%,transparent 66%)}
+@media (max-width:880px){.moon{--m:clamp(52px,13vw,72px);left:auto;right:clamp(18px,6vw,40px);top:96px;bottom:auto}}
+@media (max-width:700px){.moon{top:136px}}
+/* the smallest phones: the download button takes a row of its own, so the nav is three rows deep */
+@media (max-width:360px){.hero{padding-top:192px}.moon{top:180px}}
+/* shooting stars: invisible at rest, so reduced motion and print show none */
+.meteors{position:absolute;inset:0;z-index:0;pointer-events:none}
+.meteors i{position:absolute;width:clamp(110px,12vw,180px);height:2px;border-radius:2px;opacity:0;transform-origin:0 50%;background:linear-gradient(90deg,#FFF8EC,rgba(255,214,160,.7) 14%,rgba(255,214,160,0))}
+.meteors i::before{content:"";position:absolute;left:-2px;top:-2px;width:6px;height:6px;border-radius:50%;background:#FFF8EC;box-shadow:0 0 10px 3px rgba(255,226,180,.85)}
+.meteors i:nth-child(1){left:56%;top:64px;--a:-16deg;--run:-44vw}
+.meteors i:nth-child(2){left:94%;top:30px;--a:-24deg;--run:-30vw}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--cream);opacity:.5}
+.pines{position:relative;z-index:1;height:max(clamp(120px,18vw,220px),18vw);margin-top:clamp(24px,4vw,56px);pointer-events:none;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.pines svg{position:absolute;inset:auto 0 0 0;width:100%;height:100%}
+/* pine strips: the SVGs slice-fill the strip's width, so a strip shorter than its tallest tree crops the tips.
+   Each strip is at least (300 - tallest peak + 6) / 1440 of the width: hero 47 -> 18vw, sunrise 41 -> 18.4vw, close 105 -> 14vw. */
+
+/* =========================================================
+   RESET
+   ========================================================= */
+.reset{padding:clamp(24px,3vw,48px) 0 calc(var(--sec) * .8)}
+.reset .lede{color:var(--cream-2)}
+.demo{justify-self:end;width:100%;max-width:500px}
+@media (max-width:880px){.demo{justify-self:start}}
+.toggle{position:absolute;opacity:0;width:1px;height:1px}
+.ledger{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;border-radius:22px;overflow:hidden;background:var(--glass-line);max-width:500px}
+.cell{position:relative;background:var(--sky-1);padding:22px 22px 18px}
+.cell b{display:block;font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.cell span{display:block;margin-top:6px;font-size:.875rem;color:var(--cream-2)}
+.cell.lead{background:#2C1A40}
+.roll{position:relative;display:block;height:1.05em;overflow:hidden}
+.roll i{position:absolute;inset:0;font-style:normal;transition:transform .7s var(--ease),opacity .5s}
+.roll .after{transform:translateY(100%);opacity:0}
+.kept{position:absolute;top:16px;right:16px;font-size:.75rem;font-weight:700;color:var(--ember);opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s var(--ease)}
+.demo label.btn{margin-top:18px}
+.demo .on{display:none}
+.toggle:checked ~ .ledger .roll .before{transform:translateY(-100%);opacity:0}
+.toggle:checked ~ .ledger .roll .after{transform:none;opacity:1}
+.toggle:checked ~ .ledger .kept{opacity:1;transform:none}
+.toggle:checked ~ .ledger .k2{transition-delay:.25s}.toggle:checked ~ .ledger .k3{transition-delay:.34s}.toggle:checked ~ .ledger .k4{transition-delay:.43s}
+.toggle:checked ~ label .off{display:none}.toggle:checked ~ label .on{display:inline}
+.toggle:focus-visible ~ label{outline:3px solid var(--ember);outline-offset:3px}
+.demo-note{display:block;margin-top:12px;font-size:.875rem;color:var(--cream-2)}
+
+/* =========================================================
+   SUNRISE: the middle of the sky
+   ========================================================= */
+.sunrise{position:relative;overflow:hidden;min-height:clamp(520px,62vw,800px);padding-top:clamp(40px,5vw,72px)}
+.sun{position:absolute;z-index:0;left:50%;bottom:clamp(70px,10vw,140px);width:clamp(120px,14vw,190px);aspect-ratio:1;margin-left:calc(clamp(120px,14vw,190px) / -2);border-radius:50%;box-shadow:0 0 90px 40px rgba(255,222,168,.5)}
+/* the disc sits on top of its own crown of rays: both are the sun's, so they climb with it */
+.sun::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 42% 40%,#FFFDF6,#FFF0CF 62%,rgba(255,240,207,.4))}
+.sun::before{content:"";position:absolute;inset:-150%;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,246,222,.5) 0deg 4deg,rgba(255,246,222,0) 7deg 15deg);-webkit-mask-image:radial-gradient(circle,#000 18%,rgba(0,0,0,.5) 38%,transparent 68%);mask-image:radial-gradient(circle,#000 18%,rgba(0,0,0,.5) 38%,transparent 68%)}
+/* a small flock crossing the dawn, in front of the sun and behind the headline; only where things may move */
+.birds{display:none;position:absolute;z-index:1;left:0;top:clamp(150px,24vw,300px);width:180px;height:90px;pointer-events:none;color:#3B1838}
+.birds i{position:absolute;width:46px;height:18px}
+.birds i::before,.birds i::after{content:"";position:absolute;top:0;width:23px;height:15px;border-top:3.5px solid currentColor;border-radius:70% 70% 0 0}
+.birds i::before{left:0;transform-origin:100% 0}
+.birds i::after{right:0;transform-origin:0 0}
+.birds i:nth-child(1){left:0;top:26px}
+.birds i:nth-child(2){left:64px;top:0;scale:.82}
+.birds i:nth-child(3){left:116px;top:44px;scale:.7}
+.sunrise h2{position:relative;z-index:2;color:var(--cream);font-size:clamp(2.375rem,5.6vw,4.75rem);letter-spacing:-.04em;line-height:.98;max-width:12em;margin:0 auto;text-align:center}
+.sunrise .wrap{width:100%}
+.horizon{position:absolute;left:0;right:0;bottom:0;height:max(clamp(130px,17vw,230px),18.4vw);z-index:1;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.sunrise::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40px;background:linear-gradient(transparent,#E4F0E5);z-index:1}
+.horizon svg{position:absolute;inset:auto 0 0 0;width:100%;height:100%}
+
+/* =========================================================
+   LEDGER (day)
+   ========================================================= */
+.ledger-sec{position:relative;z-index:2;padding:clamp(48px,6vw,80px) 0 var(--sec)}
+.ledger-sec .split{align-items:start}
+.ledger-sec figure{margin-top:clamp(-200px,-14vw,-90px)}
+@media (max-width:880px){.ledger-sec figure{margin-top:8px}}
+.ledger-sec .lede{color:var(--body)}
+.habits{margin-top:24px;font-weight:700;max-width:28em}
+.ledger-sec .shot{max-width:420px;width:100%;justify-self:end}
+@media (max-width:880px){.ledger-sec .shot{justify-self:start}}
+
+/* =========================================================
+   FOREST (day): the app's trees, in daylight
+   ========================================================= */
+.forest-sec{padding:var(--sec) 0}
+.forest-sec .split{align-items:start}
+.forest-sec .lede{color:var(--body);margin-top:0}
+.grove{position:relative;margin-top:56px;padding:0 clamp(12px,4vw,56px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,2.5vw,36px);align-items:end;border-bottom:2px solid rgba(22,118,79,.25)}
+.tree{display:flex;flex-direction:column;align-items:center;gap:12px;padding-bottom:16px}
+.tree i{display:block;width:clamp(44px,8vw,112px);clip-path:polygon(50% 0,100% 100%,0 100%);background:linear-gradient(170deg,var(--tree-mid),var(--tree-near));transform-origin:50% 100%}
+.t1 i{height:clamp(120px,17vw,230px)}.t2 i{height:clamp(135px,19vw,255px)}.t3 i{height:clamp(150px,21vw,280px)}.t4 i{height:clamp(165px,23vw,305px)}
+.t5 i{height:clamp(165px,23vw,305px);background:linear-gradient(150deg,var(--ember),#D05C3C);scale:1 .37}
+.tree span{font-size:.9375rem;font-weight:700;text-align:center;line-height:1.3}
+.tree small{display:block;font-size:.8125rem;font-weight:500;color:var(--terra-press)}
+/* every label has room for two lines, so November's day count no longer lifts its tree off the ground line */
+.tree span{min-height:2.6em}
+/* the day November takes in: a spark that climbs from the tree's foot to its tip; only where things may move */
+.t5{position:relative}
+.mote{--tip:calc(clamp(165px,23vw,305px) * -.37);display:none;position:absolute;left:50%;bottom:calc(28px + 2.6em);width:14px;height:14px;margin-left:-7px;font-size:.9375rem;border-radius:50%;pointer-events:none;background:#FFFDF6;box-shadow:0 0 0 3px rgba(255,255,255,.75),0 0 24px 10px rgba(255,196,112,.9)}
+.forest-notes{margin-top:32px;color:var(--body)}
+.forest-notes p{max-width:32em}
+.forest-notes p + p{margin-top:0}
+@media (max-width:880px){.forest-notes p + p{margin-top:12px}}
+
+/* =========================================================
+   PREMIUM
+   ========================================================= */
+.price-sec{padding:var(--sec) 0}
+.price-sec .split{align-items:start;margin-top:48px}
+.free-list li{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-weight:700;font-size:1.25rem;letter-spacing:-.01em}
+.free-list li span{white-space:nowrap;font-size:.9375rem;font-weight:500;color:var(--sage)}
+.plan{background:#fff;border-radius:26px;padding:clamp(26px,3.5vw,40px);box-shadow:0 14px 30px rgba(34,48,42,.08),inset 0 0 0 1px var(--line)}
+.plan h3{font-size:1.75rem;font-weight:800;letter-spacing:-.025em}
+.price{margin-top:12px;font-size:1.125rem;font-weight:700;line-height:1.45}
+.plan ul{margin-top:20px}
+.plan li{padding:12px 0;border-top:1px solid var(--line);font-weight:700}
+.plan li small{display:block;color:var(--muted);font-weight:500;font-size:.9375rem}
+.fine{margin-top:18px;font-size:.9375rem;color:var(--body);line-height:1.55}
+
+/* =========================================================
+   PRIVACY (day): short lines, each one the app's own
+   ========================================================= */
+.priv-sec{padding:var(--sec) 0 0}
+.priv-sec .split{align-items:start}
+.priv-links{margin-top:20px;max-width:26em;color:var(--body)}
+.priv-links a{color:var(--terra-press);font-weight:700;text-underline-offset:3px;padding:12px 0}
+.priv-links a:hover{color:var(--ink)}
+.priv-list{border-top:1px solid var(--line)}
+.priv-list li{padding:18px 0;border-bottom:1px solid var(--line);font-size:var(--lede);line-height:1.45;color:var(--ink);text-wrap:pretty}
+
+/* =========================================================
+   WON'T: the page's promise. One column, heading above.
+   ========================================================= */
+.wont{padding:var(--sec) 0}
+.wont h2{margin:0 auto;text-align:center}
+.promise{max-width:44rem;margin:clamp(32px,4vw,48px) auto 0;border-top:2px solid var(--ink)}
+.promise li{padding:clamp(20px,2.4vw,28px) 0;border-bottom:1px solid var(--line)}
+.promise b{display:block;font-size:1.5rem;font-weight:800;letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.promise span{display:block;margin-top:6px;color:var(--body)}
+
+/* =========================================================
+   FAQ teaser: native disclosure, no script
+   ========================================================= */
+.faq-sec{padding:0 0 var(--sec)}
+.faq-sec .split{align-items:start}
+.faq-list{border-top:1px solid var(--line)}
+.faq-list details{border-bottom:1px solid var(--line)}
+.faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:60px;padding:14px 0;font-size:1.1875rem;font-weight:700;letter-spacing:-.01em;line-height:1.35;cursor:pointer;list-style:none}
+.faq-list summary::-webkit-details-marker{display:none}
+/* a plus that turns into a cross: two bars drawn as gradients, turned as one */
+.faq-list summary::after{content:"";flex:none;width:28px;height:28px;border-radius:50%;background:linear-gradient(var(--terra),var(--terra)) center/12px 2px no-repeat,linear-gradient(var(--terra),var(--terra)) center/2px 12px no-repeat;box-shadow:inset 0 0 0 1.5px rgba(184,85,46,.35)}
+.faq-list details[open] summary::after{rotate:45deg}
+.faq-list summary:hover{color:var(--terra-press)}
+.faq-list details p{max-width:36em;padding:0 0 22px;color:var(--body)}
+.faq-more{margin-top:16px}
+.faq-more a{display:inline-flex;align-items:center;min-height:44px;color:var(--terra-press);font-weight:700;text-underline-offset:3px}
+.faq-more a:hover{color:var(--ink)}
+
+/* =========================================================
+   FOUNDER NOTE: a short letter, unsigned and still. A centered
+   column, the text left-aligned inside it, no quote marks.
+   ========================================================= */
+.letter{max-width:34em;margin:0 auto;font-size:1.25rem;line-height:1.6;color:var(--body)}
+.letter h2{margin-bottom:24px;font-size:var(--h2);color:var(--ink)}
+.letter p{text-wrap:pretty}
+.letter p + p{margin-top:1em}
+.letter p:last-child{font-weight:700;color:var(--ink)}
+@media (max-width:700px){.letter{font-size:1.125rem}}
+
+/* =========================================================
+   CLOSE: back to the trees, in daylight
+   ========================================================= */
+.close{position:relative;overflow:hidden;overflow:clip;padding:var(--sec) 0 0;text-align:center} /* clip, not hidden: a hidden box is a scroll container and would freeze the closing pines' view() timeline */
+.close h2{max-width:13em;margin:0 auto}
+.close .ctas{margin-top:28px}
+.help{max-width:36em;margin:22px auto 0;color:var(--body);font-size:1rem;text-wrap:balance}
+.help a{padding:12px 0;color:var(--terra-press);font-weight:700;text-underline-offset:3px;white-space:nowrap}
+.help a:hover{color:var(--ink)}
+.daypines{position:relative;height:max(clamp(110px,16vw,200px),14vw);margin-top:clamp(56px,7vw,88px)}
+.daypines svg{position:absolute;inset:auto 0 0 0;width:100%;height:100%}
+/* the forest floor: the not-medical-care line and the support address (in <main>), then the site's shared footer */
+.floor-note{position:relative;z-index:1;background:var(--tree-near);color:rgba(240,248,242,.92);font-size:.9375rem;text-align:left;padding:32px 0 0}
+.floor-row{display:flex;flex-wrap:wrap;gap:4px 40px;justify-content:space-between;align-items:baseline}
+footer{background:var(--tree-near);color:rgba(240,248,242,.92);font-size:.9375rem;padding:8px 0 44px}
+footer nav{display:flex;flex-wrap:wrap;gap:4px 24px;max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+.floor-note a,footer a{text-decoration:none;padding:10px 8px;margin:0 -8px}
+.floor-note a:hover,footer a:hover{color:#fff}
+.floor-note :focus-visible,footer :focus-visible{outline-color:#fff}
+
+/* =========================================================
+   MOTION. Time-based: the hero sequence and ambient loops.
+   Scroll-based: CSS scroll-driven animations, so no script.
+   Everything is off for reduced motion and in print.
+   ========================================================= */
+@media screen and (prefers-reduced-motion:no-preference){
+  /* hero sequence, ~10.4 s, ends on step 3 and stays there */
+  .s1,.s2{visibility:visible}
+  .s1{animation:sIn .6s var(--ease) .5s both,sOut .45s ease-in 4.95s forwards}
+  .ring{animation:inhale 4s cubic-bezier(.45,0,.55,1) .9s both}
+  .count span{animation:tick 1s linear both}
+  .count span:nth-child(1){animation-delay:.9s}.count span:nth-child(2){animation-delay:1.9s}
+  .count span:nth-child(3){animation-delay:2.9s}.count span:nth-child(4){animation-delay:3.9s;animation-name:tickLast}
+  .s2{animation:sIn .5s var(--ease) 5.3s both,sOut .4s ease-in 7.45s forwards}
+  .s2 .chip{--in:5.45s;animation:chipIn .4s var(--ease) var(--in) both}
+  .s2 .chip:nth-child(2){--in:5.52s}.s2 .chip:nth-child(3){--in:5.59s}
+  .s2 .chip:nth-child(4){--in:5.66s}.s2 .chip:nth-child(5){--in:5.73s}.s2 .chip:nth-child(6){--in:5.8s}
+  .s2 .chip.pick{animation:chipIn .4s var(--ease) var(--in) both,pick .35s var(--ease) 6.35s forwards}
+  .s2 .pill{animation:sIn .4s var(--ease) 6.55s both,press .3s ease 7.05s}
+  .s3{animation:sIn .55s var(--ease) 7.75s both}
+  .s3 .tile{animation:chipIn .45s var(--ease) both}
+  .s3 .tile:nth-child(1){animation-delay:7.95s}.s3 .tile:nth-child(2){animation-delay:8.05s}
+  .s3 .tile.waves{animation:chipIn .45s var(--ease) 8.15s both,glow 1.1s ease 9.45s}
+  .s3 .why{animation:sIn .5s var(--ease) 8.4s both}
+  .s3 .rode{animation:sIn .4s var(--ease) 8.65s both,press .32s ease 9.25s}
+  .n .from{animation:numShow 9.45s step-end both,numOut .35s var(--ease) 9.45s forwards}
+  .n .to{animation:numIn .45s var(--ease) 9.52s both}
+  .s3 .beat{animation:sIn .45s var(--ease) 9.65s both}
+  .stage{animation:stageIn 1s var(--ease) .1s both}
+  .habit-tabs{animation:sIn .9s var(--ease) .05s both}
+  .hero h1,.hero .intro,.hero .ctas,.hero .avail{animation:sIn .9s var(--ease) both}
+  .hero .intro{animation-delay:.12s}.hero .ctas{animation-delay:.22s}.hero .avail{animation-delay:.3s}
+
+  /* ambient */
+  .stars i{animation:twinkle var(--d,5s) ease-in-out infinite}
+  /* the moon comes up from behind the pines as the page opens, then its halo breathes */
+  .moon{animation:moonRise 3.4s cubic-bezier(.16,.7,.2,1) .25s both}
+  .moon::after{animation:halo 6s ease-in-out 3.6s infinite}
+  /* a shooting star soon after the headline lands, then one every few seconds, the two never in step */
+  .meteors i:nth-child(1){animation:meteor 9s cubic-bezier(.3,0,.7,1) 1.6s infinite}
+  .meteors i:nth-child(2){animation:meteor 13s cubic-bezier(.3,0,.7,1) 6.2s infinite}
+  /* the sun never sits still: a slow rise and settle, and a glow that breathes (translate and scale, so they add to the scroll rise's transform) */
+  .sun{animation:sunFloat 7s ease-in-out infinite alternate,sunGlow 5s ease-in-out infinite}
+  /* the flock crosses every 18 s, wings beating out of step, each bird bobbing on its own */
+  .birds{display:block;animation:flyAcross 18s linear -4s infinite}
+  .birds i{animation:bob 2.4s ease-in-out infinite alternate}
+  .birds i:nth-child(2){animation-delay:-.8s}.birds i:nth-child(3){animation-delay:-1.6s}
+  .birds i::before{animation:flapL .55s ease-in-out infinite alternate}
+  .birds i::after{animation:flapR .55s ease-in-out infinite alternate}
+  .birds i:nth-child(2)::before,.birds i:nth-child(2)::after{animation-delay:-.2s}
+  .birds i:nth-child(3)::before,.birds i:nth-child(3)::after{animation-delay:-.38s}
+  /* the pines sway: each layer of each strip leans in the wind at its own pace (on the <g>, so the scroll rise on the <svg> is untouched) */
+  .pines g,.horizon g,.daypines g{transform-box:fill-box;transform-origin:50% 100%;animation:sway 7s ease-in-out infinite alternate}
+  .pines .p-far g,.horizon .p-far g,.daypines .p-far g{--lean:.5deg;animation-duration:9s;animation-delay:-3s}
+  .pines .p-mid g,.horizon .p-mid g,.daypines .p-mid g{--lean:.8deg;animation-duration:7s;animation-delay:-1.5s}
+  .pines .p-near g,.horizon .p-near g,.daypines .p-near g{--lean:1.1deg;animation-duration:5.5s}
+  /* the Today screen rests on the page as if on water */
+  .ledger-sec .shot{animation:floatY 8s ease-in-out infinite alternate}
+  /* November's tree isn't finished: it keeps reaching */
+  /* a breeze passes through the grove, July to November, every 7 s */
+  .tree i{animation:gust 7s ease-in-out infinite}
+  .t2 i{animation-delay:.2s}.t3 i{animation-delay:.4s}.t4 i{animation-delay:.6s}
+  /* the FAQ marker turns as a question opens: motion that answers a tap */
+  .faq-list summary::after{transition:rotate .25s var(--ease)}
+  /* November takes in another day: a spark climbs it, bursts at the tip, and the tree springs up a notch */
+  .t5 i{animation:dayTick 4.5s ease-in-out infinite,gust 7s ease-in-out .8s infinite}
+  .mote{display:block;animation:dayRise 4.5s ease-in-out infinite}
+}
+@keyframes sIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes sOut{to{opacity:0;transform:translateY(-10px);visibility:hidden}}
+@keyframes stageIn{from{opacity:0;transform:translateY(28px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes inhale{from{transform:scale(.72);opacity:.55}to{transform:scale(1);opacity:1}}
+@keyframes tick{0%{opacity:0}12%,82%{opacity:1}100%{opacity:0}}
+@keyframes tickLast{0%{opacity:0}12%,100%{opacity:1}}
+@keyframes chipIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes pick{to{background:#FFF5E6;color:var(--on-ember);box-shadow:none}}
+@keyframes press{50%{transform:scale(.96)}}
+@keyframes glow{40%{box-shadow:inset 0 0 0 1.5px var(--ember),0 0 36px rgba(246,165,95,.4)}}
+@keyframes numShow{from{opacity:1}to{opacity:1}}
+@keyframes numOut{from{opacity:1}to{opacity:0;transform:translateY(-60%)}}
+@keyframes numIn{from{opacity:0;transform:translateY(60%)}to{opacity:1;transform:none}}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:var(--o,.75)}}
+@keyframes moonRise{from{opacity:0;translate:0 70px}35%{opacity:1}to{opacity:1;translate:0 0}}
+@keyframes halo{0%,100%{opacity:1;scale:1}50%{opacity:.6;scale:.92}}
+@keyframes meteor{0%{opacity:0;transform:rotate(var(--a)) translateX(0)}1.5%{opacity:1}9%{opacity:1}12%,100%{opacity:0;transform:rotate(var(--a)) translateX(var(--run))}}
+
+/* scroll-driven: only where the browser supports it; elsewhere the page is simply still */
+@supports (animation-timeline:view()){
+  @media screen and (prefers-reduced-motion:no-preference){
+    /* night ends as you scroll: stars fade, pines sink at different rates */
+    .stars{animation:fadeOut linear both;animation-timeline:scroll(root);animation-range:0 120vh}
+    .pines .p-far{animation:sink1 linear both;animation-timeline:scroll(root);animation-range:0 100vh}
+
+    .rv-shot{animation:shotIn linear both;animation-timeline:view();animation-range:entry 0% entry 80%}
+
+    /* the sun climbs as the sunrise scrolls through, the sky behind it warms */
+    .sun{animation:sunUp linear both,sunFloat 7s ease-in-out infinite alternate,sunGlow 5s ease-in-out infinite;animation-timeline:--sunrise,auto,auto;animation-range:entry 10% cover 60%,normal,normal}
+
+    /* trees grow with the scroll, one after another */
+    .grove{view-timeline:--grove block}
+    .tree i{animation:grow linear both,gust 7s ease-in-out infinite;animation-timeline:--grove,auto}
+    .t1 i{animation-range:entry 0% cover 22%,normal}.t2 i{animation-range:entry 10% cover 26%,normal;animation-delay:0s,.2s}.t3 i{animation-range:entry 20% cover 30%,normal;animation-delay:0s,.4s}
+    .t4 i{animation-range:entry 30% cover 34%,normal;animation-delay:0s,.6s}
+    .t5 i{animation:growNow linear both,dayTick 4.5s ease-in-out infinite,gust 7s ease-in-out .8s infinite;animation-timeline:--grove,auto,auto;animation-range:entry 40% cover 38%,normal,normal}
+
+    /* sections rise in as they enter: translate and opacity only, so no other transform is touched */
+    .reset h2,.reset .lede,.demo,.ledger-sec .lede,.habits,.forest-sec h2,.forest-sec .lede,.forest-notes p,.price-sec h2,.free-list li,.plan,.priv-sec h2,.priv-links,.priv-list li,.wont h2,.wont li,.faq-sec h2,.faq-list,.close h2,.close .ctas,.help{animation:riseIn linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+    .wont li:nth-child(even){animation-range:entry 15% entry 85%}
+    .sunrise h2{animation:riseIn linear both;animation-timeline:--sunrise;animation-range:entry 0% entry 40%}
+
+
+    .daypines svg{animation:treesUp linear both;animation-timeline:view();animation-range:entry 0% entry 80%}
+    .daypines .p-mid{animation-range:entry 10% entry 90%}.daypines .p-near{animation-range:entry 20% entry 100%}
+    /* sunrise: the day pines rise in front of the sun, the same forest as the hero, by day */
+    .sunrise{view-timeline:--sunrise block}
+    .horizon svg{animation:treesUp linear both;animation-timeline:--sunrise;animation-range:entry 20% cover 55%}
+    .horizon .p-mid{animation-range:entry 30% cover 60%}.horizon .p-near{animation-range:entry 40% cover 65%}
+  }
+}
+@keyframes fadeOut{to{opacity:0}}
+@keyframes sink1{to{transform:translateY(46px)}}
+@keyframes shotIn{from{transform:translateY(70px)}to{transform:none}}
+@keyframes sunUp{from{transform:translateY(220px) scale(.85)}to{transform:none}}
+@keyframes flyAcross{from{transform:translate(-220px,40px)}to{transform:translate(calc(100vw + 40px),-50px)}}
+@keyframes bob{from{translate:0 -4px}to{translate:0 5px}}
+@keyframes flapL{from{rotate:-24deg}to{rotate:16deg}}
+@keyframes flapR{from{rotate:24deg}to{rotate:-16deg}}
+@keyframes sunFloat{from{translate:0 8px}to{translate:0 -10px}}
+@keyframes sunGlow{0%,100%{scale:1;box-shadow:0 0 90px 40px rgba(255,222,168,.5)}50%{scale:1.04;box-shadow:0 0 140px 66px rgba(255,222,168,.72)}}
+@keyframes grow{from{transform:scaleY(.25)}to{transform:none}}
+@keyframes growNow{from{transform:scaleY(.25)}to{transform:none}}
+@keyframes treesUp{from{transform:translateY(70%)}to{transform:none}}
+@keyframes sway{from{transform:skewX(calc(var(--lean,.8deg) * -1))}to{transform:skewX(var(--lean,.8deg))}}
+@keyframes floatY{from{transform:translateY(6px)}to{transform:translateY(-10px)}}
+@keyframes gust{0%,46%,100%{rotate:0deg}12%{rotate:3.2deg}22%{rotate:-1.8deg}32%{rotate:.8deg}40%{rotate:-.3deg}}
+@keyframes dayTick{0%,48%{scale:1 .37}56%{scale:1 .47}66%{scale:1 .41}100%{scale:1 .37}}
+@keyframes dayRise{0%{opacity:0;translate:0 0;scale:.6}10%{opacity:1;scale:1}48%{opacity:1;translate:0 var(--tip);scale:1}58%,100%{opacity:0;translate:0 var(--tip);scale:3.2}}
+@keyframes riseIn{from{opacity:0;translate:0 48px}to{opacity:1;translate:0 0}}
+
+@media (prefers-reduced-motion:reduce){.replay,#replay{display:none}}
+@media print{
+  .replay,#replay{display:none}
+  .s1,.s2{visibility:hidden}
+  .stage{box-shadow:none}
+  .nav{position:static}
+  .habit-tabs{display:none}
+  .faq-list details::details-content{content-visibility:visible}
+  .faq-list summary::after{display:none}
+}
+
+/* stars: positions and twinkle timing (generated) */
+.stars i:nth-child(1){left:61.8%;top:46.8%;--d:6.2s;--o:0.87;animation-delay:-4.4s}
+.stars i:nth-child(2){left:90.5%;top:4.7%;--d:4.9s;--o:0.87;animation-delay:-3.9s}
+.stars i:nth-child(3){left:88.5%;top:9.7%;--d:4.9s;--o:0.52;animation-delay:-3.3s}
+.stars i:nth-child(4){left:57.1%;top:3.8%;--d:3.9s;--o:0.54;animation-delay:-5.5s}
+.stars i:nth-child(5){left:75.5%;top:12.4%;--d:6.2s;--o:0.47;animation-delay:-3.7s}
+.stars i:nth-child(6){left:14.2%;top:3.1%;--d:6.5s;--o:0.50;animation-delay:-1.3s}
+.stars i:nth-child(7){left:96.3%;top:54.5%;--d:4.2s;--o:0.88;animation-delay:-3.2s}
+.stars i:nth-child(8){left:67.1%;top:15.1%;--d:6.8s;--o:0.75;animation-delay:-5.8s}
+.stars i:nth-child(9){left:87.8%;top:20.6%;--d:4.4s;--o:0.48;animation-delay:-0.9s}
+.stars i:nth-child(10){left:8.3%;top:20.8%;--d:5.4s;--o:0.40;animation-delay:-4.1s}
+.stars i:nth-child(11){left:34.4%;top:21.3%;--d:6.3s;--o:0.64;animation-delay:-1.9s}
+.stars i:nth-child(12){left:48.2%;top:44.6%;--d:3.2s;--o:0.89;animation-delay:-0.1s}
+.stars i:nth-child(13){left:74.0%;top:52.8%;--d:3.1s;--o:0.79;animation-delay:-2.2s}
+.stars i:nth-child(14){left:57.5%;top:3.5%;--d:3.2s;--o:0.49;animation-delay:-5.7s}
+.stars i:nth-child(15){left:20.9%;top:47.6%;--d:6.7s;--o:0.87;animation-delay:-2.1s}
+.stars i:nth-child(16){left:36.1%;top:34.0%;--d:6.1s;--o:0.45;animation-delay:-4.5s}
+.stars i:nth-child(17){left:78.5%;top:53.7%;--d:3.1s;--o:0.87;animation-delay:-0.5s}
+.stars i:nth-child(18){left:34.7%;top:39.0%;--d:6.7s;--o:0.57;animation-delay:-5.5s}
+.stars i:nth-child(19){left:54.3%;top:21.4%;--d:4.3s;--o:0.49;animation-delay:-0.5s}
+.stars i:nth-child(20){left:16.3%;top:43.7%;--d:7.0s;--o:0.48;animation-delay:-0.3s}
+.stars i:nth-child(21){left:96.7%;top:34.5%;--d:4.6s;--o:0.52;animation-delay:-3.6s}
+.stars i:nth-child(22){left:81.3%;top:29.9%;--d:4.7s;--o:0.43;animation-delay:-5.5s}
+.stars i:nth-child(23){left:5.1%;top:32.1%;--d:6.4s;--o:0.47;animation-delay:-4.4s}
+.stars i:nth-child(24){left:93.2%;top:40.2%;--d:6.2s;--o:0.45;animation-delay:-2.6s}
+.stars i:nth-child(25){left:16.3%;top:52.8%;--d:4.2s;--o:0.63;animation-delay:-6.0s}
+.stars i:nth-child(26){left:83.8%;top:60.6%;--d:4.8s;--o:0.64;animation-delay:-4.4s}
+.stars i:nth-child(27){left:48.0%;top:20.2%;--d:4.6s;--o:0.47;animation-delay:-2.3s}
+.stars i:nth-child(28){left:96.9%;top:59.6%;--d:5.5s;--o:0.65;animation-delay:-2.0s}
+.stars i:nth-child(29){left:10.6%;top:19.1%;--d:6.1s;--o:0.83;animation-delay:-2.2s}
+.stars i:nth-child(30){left:77.5%;top:48.7%;--d:5.8s;--o:0.73;animation-delay:-4.6s}
+.stars i:nth-child(31){left:36.9%;top:44.6%;--d:4.1s;--o:0.64;animation-delay:-4.6s}
+.stars i:nth-child(32){left:68.3%;top:20.3%;--d:6.8s;--o:0.72;animation-delay:-3.5s}
+.stars i:nth-child(33){left:3.1%;top:35.3%;--d:4.0s;--o:0.74;animation-delay:-2.8s}
+.stars i:nth-child(34){left:80.4%;top:41.2%;--d:6.2s;--o:0.57;animation-delay:-3.9s}
+.stars i:nth-child(35){left:72.8%;top:51.9%;--d:4.4s;--o:0.82;animation-delay:-5.2s}
+.stars i:nth-child(36){left:68.1%;top:60.6%;--d:6.8s;--o:0.66;animation-delay:-3.2s}
