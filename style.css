@@ -113,6 +113,25 @@ footer nav a {
   margin-right: 1.2rem;
 }
 
+/* The FAQ's reference numbers ("2.3"): quiet, in one width, and a link to
+   that one answer. The topic list is an <ol>, indented like the lists. */
+.faq-item .q-num {
+  color: var(--muted);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  margin-right: 0.3em;
+}
+
+.faq-item .q-num:hover {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+:where(html:not(.home)) nav ol {
+  padding-left: 1.75rem;
+}
+
 /* Unfinished facts. None may remain when the page is published. */
 mark.todo {
   background: var(--mark);
